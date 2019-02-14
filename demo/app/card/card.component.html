@@ -1,0 +1,62 @@
+<div class="app-card" *ngIf="data">
+
+  <div *ngIf="data.reviewee">
+    <div class="d-flex justify-content-between pb-2">
+      <span class="app-h8">Provide to</span>
+      <div *ngIf="data.status">
+        <span class="badge app-badge app-badge-declined"
+              [ngClass]="{'app-badge-to-do': data.status==='to do',
+                          'app-badge-in-process': data.status==='in process',
+                          'app-badge-declined': data.status==='declined',
+                          'app-badge-done': data.status==='done',
+                          'app-badge-stopped': data.status==='stopped'}">
+        {{data.status}}
+        </span>
+      </div>
+    </div>
+    <div class="media app-media pb-2 app-divider mb-2">
+      <div class="app-profile-logo-img">
+        <img [src]="data.reviewee.photo" [alt]="data.reviewee.name">
+      </div>
+      <div class="media-body">
+        <span class="d-block">{{data.reviewee.name}}</span>
+        <small>{{data.reviewee.position}}</small>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="data.reviewer">
+    <span class="app-h8">Created by</span>
+    <div class="media app-media pb-2 app-divider mb-2">
+      <div class="app-profile-logo-img">
+        <img [src]="data.reviewer.photo" [alt]="data.reviewer.name">
+      </div>
+      <div class="media-body">
+        <span class="d-block">{{data.reviewer.name}}</span>
+        <small>{{data.reviewer.position}}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-h8">
+    <span *ngIf="data.status!=='done' && data.status!=='declined'">{{remainingDays}} day(s) remaining</span>
+    <span *ngIf="data.status==='done' || data.status==='declined'">Closed</span>
+  </div>
+  <p class="app-card-subtitle mb-4">
+    {{getProcessName(data.status)[0]}}
+    {{data.dateStart  | date: 'd'}}{{dateEnding}}
+    <span *ngIf="data.status==='done' || data.status==='declined'">of</span>
+    {{data.dateStart  | date: 'MMMM'}}
+  </p>
+  <div class="d-flex justify-content-end">
+    <button *ngIf="data.status==='to do' || data.status==='stopped'"
+            class="d-block btn app-btn-accent app-btn-accent-outline mr-3 w-50"
+            (click)="decline($event)">
+      <span *ngIf="data.status==='to do'">Decline</span>
+      <span *ngIf="data.status==='stopped'">Resume</span>
+    </button>
+    <button class="d-block btn app-btn-accent app-btn-accent-sm w-50" (click)="process(data.status)">
+      {{getProcessName(data.status)[1]}}
+    </button>
+  </div>
+</div>

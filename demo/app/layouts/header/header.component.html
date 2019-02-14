@@ -1,0 +1,34 @@
+<div class="d-flex align-items-center justify-content-between app-header">
+  <a class="app-logo text-white" routerLink="./">
+    <img src="/assets/images/renaizant_logo.svg" alt="renaizant" title="Home"/>
+  </a>
+  <ul class="app-menu-list list-unstyled mb-0 d-flex align-items-center">
+    <li *ngFor="let item of menu" class="app-menu-item list-inline-item text-capitalize">
+      <a [href]="item.link">{{item.title}}</a>
+    </li>
+    <li>
+      <div class="btn-group" dropdown placement="bottom right">
+        <button id="button-alignment" dropdownToggle type="button" aria-controls="dropdown-alignment">
+          <div class="d-flex align-items-center">
+            <div class="media app-media">
+              <div class="app-profile-logo-img">
+                <img [src]="user.photo" [alt]="user.name">
+              </div>
+              <div class="media-body">
+                <span class="d-block">{{user.name}}</span>
+                <small>{{user.position}}</small>
+              </div>
+            </div>
+            <span class="app-caret"><i class="fas fa-angle-down"></i></span>
+          </div>
+        </button>
+        <ul id="dropdown-alignment" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-alignment">
+          <li role="menuitem" *ngFor="let item of userMenu">
+            <a class="dropdown-item text-dark" [href]="item.link">{{item.title}}</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
+
